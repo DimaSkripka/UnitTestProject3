@@ -34,8 +34,6 @@ namespace UnitTestProject3
             TestSetup setup = new TestSetup(this.driver);
             setup.Navigate();
             scenario.Login();
-
-            
         }
     }
 }

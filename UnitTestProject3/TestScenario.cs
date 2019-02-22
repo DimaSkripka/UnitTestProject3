@@ -30,6 +30,8 @@ namespace UnitTestProject3
         {
             HelperClass helper = new HelperClass(this.driver);
             LoginPage loginpage = new LoginPage(this.driver);
+            Exceptions exception = new Exceptions(this.driver);
+
             loginpage.UserNameField.Clear();
             loginpage.UserNameField.SendKeys("standard_user");
 
@@ -48,13 +50,34 @@ namespace UnitTestProject3
             CartPage cart = new CartPage(this.driver);
             List<Product> productsWithAttributes2 = helper.getProductAttributes(cart.ProductList, "inventory_item_name", "inventory_item_desc", "inventory_item_price");
 
-            //if (productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)))
-            //{
-            //    driver.FindElement(By.ClassName("cart_checkout_link")).Click();
-            //}
+            try
+            {
+                Assert.IsTrue(productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)));
+            }
+            catch (Exception ex)
+            {
+                new StreamWriter(@"C:/Users/skripka/Desktop/TestData/TestDescription2.txt").WriteLine("not match");
+                new CartPage(this.driver).checkOutButton.Click();
+            }
 
-            Assert.IsTrue(productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)));
+            CheckOutInformation checkInfo= new CheckOutInformation(this.driver);
+            checkInfo.firstName.SendKeys("John");
+            checkInfo.lastName.SendKeys("Konor");
+            checkInfo.zipCode.SendKeys("12345");
+            checkInfo.continueButton.Click();
 
+            List<Product> cartProductsWithAttributes = helper.getProductAttributes(new CheckoutOverview(this.driver).productList, "inventory_item_name", "inventory_item_desc", "inventory_item_price");
+
+            try
+            {
+                Assert.IsTrue(productsWithAttributes2.All(f => cartProductsWithAttributes.Any(g => g.name == f.name && g.price == f.price)));
+            }
+            catch (Exception ex)
+            {
+
+                new StreamWriter(@"C:/Users/skripka/Desktop/TestData/TestDescription3.txt").WriteLine("not match");
+                new CheckoutOverview(this.driver).finishButton.Click();
+            }
         }
 
         public void Test()

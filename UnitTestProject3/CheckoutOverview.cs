@@ -11,37 +11,29 @@ using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-
 
 namespace UnitTestProject3
 {
-    public class Exceptions
+    class CheckoutOverview
     {
         private readonly IWebDriver driver;
         public WebDriverWait wait;
 
-        Random rnd = new Random();
-
-        public Exceptions(IWebDriver browser)
+        public CheckoutOverview(IWebDriver browser)
         {
             this.driver = browser;
             PageFactory.InitElements(browser, this);
         }
 
-        public void CheckIsElementPresented(string elementLocator, string exceptionText, string txtPath)
-        {
-            try
-            {
-                driver.FindElement(By.ClassName(elementLocator));
-            }
-            catch (Exception ex)
-            {
-                using (var streamWriter = new StreamWriter(txtPath))
-                {
-                    streamWriter.WriteLine(exceptionText);
-                }
-            }
-        }
+
+        [FindsBy(How = How.ClassName, Using = "cart_list")]
+        [FindsBy(How = How.ClassName, Using = "cart_item")]
+        public IList<IWebElement> productList { get; set; }
+
+        [FindsBy(How = How.ClassName, Using = "summary_subtotal_label")]
+        public IWebElement totalPrice { get; set; }
+
+        [FindsBy(How = How.ClassName, Using = "cart_checkout_link")]
+        public IWebElement finishButton { get; set; }
     }
 }

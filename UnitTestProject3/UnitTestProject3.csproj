@@ -69,6 +69,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CartPage.cs" />
+    <Compile Include="CheckOutInformation.cs" />
+    <Compile Include="CheckoutOverview.cs" />
     <Compile Include="Exceptions.cs" />
     <Compile Include="ExecuteClass.cs" />
     <Compile Include="HelperClass.cs" />

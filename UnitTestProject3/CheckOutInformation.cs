@@ -14,22 +14,27 @@ using System.Linq;
 
 namespace UnitTestProject3
 {
-    class CartPage
+    class CheckOutInformation
     {
         private readonly IWebDriver driver;
         public WebDriverWait wait;
 
-        public CartPage(IWebDriver browser)
+        public CheckOutInformation(IWebDriver browser)
         {
             this.driver = browser;
             PageFactory.InitElements(browser, this);
         }
 
-        [FindsBy(How = How.ClassName, Using = "cart_list")]
-        [FindsBy(How = How.ClassName, Using = "cart_item")]
-        public IList<IWebElement> ProductList { get; set; }
+        [FindsBy(How = How.XPath, Using = "//*[@id='checkout_info_container']/div/form/input[1]")]
+        public IWebElement firstName { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//*[@id='checkout_info_container']/div/form/input[2]")]
+        public IWebElement lastName { get; set; }
+
+        [FindsBy(How = How.XPath, Using = "//*[@id='checkout_info_container']/div/form/input[3]")]
+        public IWebElement zipCode { get; set; }
 
         [FindsBy(How = How.ClassName, Using = "cart_checkout_link")]
-        public IWebElement checkOutButton { get; set; }
+        public IWebElement continueButton { get; set; }
     }
 }
