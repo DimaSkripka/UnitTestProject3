@@ -56,7 +56,10 @@ namespace UnitTestProject3
             }
             catch (Exception ex)
             {
-                new StreamWriter(@"C:/Users/skripka/Desktop/TestData/TestDescription2.txt").WriteLine("not match");
+                var writer = new StreamWriter(@"C:/Users/skripka/Desktop/TestData/TestDescription2.txt");
+                writer.WriteLine("not match");
+                writer.Flush();
+                writer.Dispose();
                 new CartPage(this.driver).checkOutButton.Click();
             }
 
@@ -75,7 +78,10 @@ namespace UnitTestProject3
             catch (Exception ex)
             {
 
-                new StreamWriter(@"C:/Users/skripka/Desktop/TestData/TestDescription3.txt").WriteLine("not match");
+                var writer = new StreamWriter(@"C:/Users/skripka/Desktop/TestData/TestDescription3.txt");
+                writer.WriteLine("not match");
+                writer.Flush();
+                writer.Dispose();
                 new CheckoutOverview(this.driver).finishButton.Click();
             }
         }

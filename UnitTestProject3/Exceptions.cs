@@ -37,10 +37,10 @@ namespace UnitTestProject3
             }
             catch (Exception ex)
             {
-                using (var streamWriter = new StreamWriter(txtPath))
-                {
-                    streamWriter.WriteLine(exceptionText);
-                }
+                var writer = new StreamWriter(txtPath);
+                writer.WriteLine("not match");
+                writer.Flush();
+                writer.Dispose();
             }
         }
     }

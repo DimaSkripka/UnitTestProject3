@@ -42,7 +42,6 @@ namespace UnitTestProject3
                 x.FindElement(By.ClassName("add-to-cart-button")).Click();
             }
 
-            //itemList[rndValue].FindElement(By.ClassName("add-to-cart-button"));
             return selectedProducts;
         }
 
@@ -51,13 +50,12 @@ namespace UnitTestProject3
 
             List<Product> productsWithAttributes = new List<Product>();
 
-            //ProductsPage products = new ProductsPage(this.driver);
             foreach (var item in selectedProducts)
             {
                 Product product = new Product();
-                product.name = item.FindElement(By.ClassName(/*"inventory_item_name"*/nameLocator)).GetAttribute("innerText");
-                product.price = item.FindElement(By.ClassName(/*"inventory_item_price"*/priceLocator)).GetAttribute("innerText");
-                product.description = item.FindElement(By.ClassName(/*"inventory_item_desc"*/descriptionLocator)).GetAttribute("innerText");
+                product.name = item.FindElement(By.ClassName(nameLocator)).GetAttribute("innerText");
+                product.price = item.FindElement(By.ClassName(priceLocator)).GetAttribute("innerText");
+                product.description = item.FindElement(By.ClassName(descriptionLocator)).GetAttribute("innerText");
                 productsWithAttributes.Add(product);
             }
             return productsWithAttributes;
