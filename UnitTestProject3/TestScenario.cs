@@ -28,6 +28,7 @@ namespace UnitTestProject3
 
         public void Login()
         {
+            HelperClass helper = new HelperClass(this.driver);
             LoginPage loginpage = new LoginPage(this.driver);
             loginpage.UserNameField.Clear();
             loginpage.UserNameField.SendKeys("standard_user");
@@ -37,9 +38,8 @@ namespace UnitTestProject3
 
             loginpage.LoginButton.Click();
 
-            HelperClass helper = new HelperClass(this.driver);
+            
             ProductsPage productsPage = new ProductsPage(this.driver);
-            //helper.SetRandomItem(productsPage.ProductList);
             IList<IWebElement> selectedProducts = helper.SelectRandomItems(productsPage.ProductList);
             List<Product> productsWithAttributes1 = helper.getProductAttributes(selectedProducts, "inventory_item_name", "inventory_item_desc", "inventory_item_price");
 
@@ -48,12 +48,12 @@ namespace UnitTestProject3
             CartPage cart = new CartPage(this.driver);
             List<Product> productsWithAttributes2 = helper.getProductAttributes(cart.ProductList, "inventory_item_name", "inventory_item_desc", "inventory_item_price");
 
-            if (productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)))
-            {
-                driver.FindElement(By.ClassName("cart_checkout_link")).Click();
-            }
+            //if (productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)))
+            //{
+            //    driver.FindElement(By.ClassName("cart_checkout_link")).Click();
+            //}
 
-            //Assert.IsTrue(productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)));
+            Assert.IsTrue(productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)));
 
         }
 
