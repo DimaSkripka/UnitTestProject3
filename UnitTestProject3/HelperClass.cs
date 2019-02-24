@@ -28,18 +28,23 @@ namespace UnitTestProject3
             this.driver = browser;
             PageFactory.InitElements(browser, this);
         }
-
         public IList<IWebElement> SelectRandomItems(IList<IWebElement> itemList)
         {
+            
             IList<IWebElement> selectedProducts = new List<IWebElement>();
 
-            int rndValue = rnd.Next(0, itemList.Count());
-
-            for (int i = 0; i < 1; i++)
+            
+            for (int i = 0; i < 3; i++)
             {
+                int rndValue = rnd.Next(0, itemList.Count());
                 var x = itemList[rndValue];
-                selectedProducts.Add(x);
-                x.FindElement(By.ClassName("add-to-cart-button")).Click();
+
+                if (!selectedProducts.Contains(itemList[rndValue]))
+                {
+                    selectedProducts.Add(itemList[rndValue]);
+                    x.FindElement(By.ClassName("add-to-cart-button")).Click();
+                }
+               
             }
 
             return selectedProducts;
@@ -59,6 +64,20 @@ namespace UnitTestProject3
                 productsWithAttributes.Add(product);
             }
             return productsWithAttributes;
+        }
+
+        public bool isAdedProductCountMatch(IList<IWebElement> addedProducts)
+        {
+
+            int productCount = Int32.Parse(driver.FindElement(By.ClassName("fa-layers-counter")).GetAttribute("innerText"));
+            if (productCount == addedProducts.Count)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

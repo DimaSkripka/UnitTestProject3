@@ -11,5 +11,6 @@ namespace UnitTestProject3
         public string name;
         public string description;
         public string price;
+        public bool isProductAdded;
     }
 }
