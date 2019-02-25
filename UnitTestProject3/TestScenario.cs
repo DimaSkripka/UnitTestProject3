@@ -40,55 +40,72 @@ namespace UnitTestProject3
 
             loginpage.LoginButton.Click();
 
-            
+
             ProductsPage productsPage = new ProductsPage(this.driver);
             IList<IWebElement> selectedProducts = helper.SelectRandomItems(productsPage.ProductList);
 
-            if (helper.isAdedProductCountMatch(selectedProducts))
+            try
             {
-                List<Product> productsWithAttributes1 = helper.getProductAttributes(selectedProducts, "inventory_item_name", "inventory_item_desc", "inventory_item_price");
-                driver.FindElement(By.Id("shopping_cart_container")).Click();
-
-                CartPage cart = new CartPage(this.driver);
-                List<Product> productsWithAttributes2 = helper.getProductAttributes(cart.ProductList, "inventory_item_name", "inventory_item_desc", "inventory_item_price");
-
-                try
-                {
-                    Assert.IsTrue(productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)));
-                }
-                catch (Exception ex)
-                {
-                    var writer = new StreamWriter(@"C:/TestData/TestDescription2.txt");
-                    writer.WriteLine("not match");
-                    writer.Flush();
-                    writer.Dispose();
-                    new CartPage(this.driver).checkOutButton.Click();
-                }
-
-                CheckOutInformation checkInfo = new CheckOutInformation(this.driver);
-                checkInfo.firstName.SendKeys("John");
-                checkInfo.lastName.SendKeys("Konor");
-                checkInfo.zipCode.SendKeys("12345");
-                checkInfo.continueButton.Click();
-
-                List<Product> cartProductsWithAttributes = helper.getProductAttributes(new CheckoutOverview(this.driver).productList, "inventory_item_name", "inventory_item_desc", "inventory_item_price");
-
-                try
-                {
-                    Assert.IsTrue(productsWithAttributes2.All(f => cartProductsWithAttributes.Any(g => g.name == f.name && g.price == f.price)));
-                }
-                catch (Exception ex)
-                {
-
-                    var writer = new StreamWriter(@"C:/TestData/TestDescription3.txt");
-                    writer.WriteLine("not match");
-                    writer.Flush();
-                    writer.Dispose();
-                    new CheckoutOverview(this.driver).finishButton.Click();
-                }
+                Assert.IsTrue(helper.isAdedProductCountMatch(selectedProducts));
+            }
+            catch (Exception)
+            {
+                var writer = new StreamWriter(@"C:/TestData/TestDescription2.txt");
+                writer.WriteLine("Cart Product Counter is not working correctly");
+                writer.Flush();
+                writer.Dispose();
+                throw;
             }
 
 
+            List<Product> productsWithAttributes1 = helper.getProductAttributes(selectedProducts, "inventory_item_name", "inventory_item_desc", "inventory_item_price");
+            driver.FindElement(By.Id("shopping_cart_container")).Click();
+
+
+            CartPage cart = new CartPage(this.driver);
+            List<Product> productsWithAttributes2 = helper.getProductAttributes(cart.CartProducts(), "inventory_item_name", "inventory_item_desc", "inventory_item_price");
+            /*не правильно работают сравнения*/
+            try
+            {
+                Assert.IsTrue(productsWithAttributes1.All(f => productsWithAttributes2.Any(g => g.name == f.name && g.price == f.price)));
+            }
+            catch (Exception ex)
+            {
+                var writer = new StreamWriter(@"C:/TestData/TestDescription3.txt");
+                writer.WriteLine("not match");
+                writer.Flush();
+                writer.Dispose();
+                new CartPage(this.driver).checkOutButton.Click();
+            }
+
+            CheckOutInformation checkInfo = new CheckOutInformation(this.driver);
+            checkInfo.firstName.SendKeys("John");
+            checkInfo.lastName.SendKeys("Konor");
+            checkInfo.zipCode.SendKeys("12345");
+            checkInfo.continueButton.Click();
+
+            List<Product> cartProductsWithAttributes = helper.getProductAttributes(new CheckoutOverview(this.driver).OverviewProducts(), "inventory_item_name", "inventory_item_desc", "inventory_item_price");
+
+            List<float> productPrices = helper.getPriceInt(cartProductsWithAttributes);
+
+            /*не правильно работают сравнения*/
+            if (helper.isMatchWithTotal(productPrices, new CheckoutOverview(this.driver).totalPrice))
+            {
+                try
+            {
+
+                Assert.IsTrue(productsWithAttributes2.All(f => cartProductsWithAttributes.Any(g => g.name == f.name && g.price == f.price)));
+            }
+            catch (Exception ex)
+            {
+
+                var writer = new StreamWriter(@"C:/TestData/TestDescription4.txt");
+                writer.WriteLine("not match");
+                writer.Flush();
+                writer.Dispose();
+                new CheckoutOverview(this.driver).finishButton.Click();
+            }
+            }
 
             
         }

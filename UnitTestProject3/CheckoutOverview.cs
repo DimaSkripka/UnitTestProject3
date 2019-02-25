@@ -26,9 +26,11 @@ namespace UnitTestProject3
         }
 
 
-        [FindsBy(How = How.ClassName, Using = "cart_list")]
-        [FindsBy(How = How.ClassName, Using = "cart_item")]
-        public IList<IWebElement> productList { get; set; }
+        public IList<IWebElement> OverviewProducts()
+        {
+            IList<IWebElement> test = driver.FindElement(By.ClassName("cart_list")).FindElements(By.ClassName("cart_item"));
+            return test;
+        }
 
         [FindsBy(How = How.ClassName, Using = "summary_subtotal_label")]
         public IWebElement totalPrice { get; set; }

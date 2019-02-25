@@ -25,11 +25,18 @@ namespace UnitTestProject3
             PageFactory.InitElements(browser, this);
         }
 
-        [FindsBy(How = How.ClassName, Using = "cart_list")]
-        [FindsBy(How = How.ClassName, Using = "cart_item")]
-        public IList<IWebElement> ProductList { get; set; }
+        //[FindsBy(How = How.ClassName, Using = "cart_list")]
+        //[FindsBy(How = How.ClassName, Using = "cart_item")]
+        public IList<IWebElement> CartProducts()
+        {
+            IList<IWebElement> test = driver.FindElement(By.ClassName("cart_list")).FindElements(By.ClassName("cart_item"));
+            return test;
+        }
+
 
         [FindsBy(How = How.ClassName, Using = "cart_checkout_link")]
         public IWebElement checkOutButton { get; set; }
     }
 }
+////*[@id="cart_contents_container"]/div/div[1]/div[3]\
+
