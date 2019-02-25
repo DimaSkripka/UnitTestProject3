@@ -25,17 +25,16 @@ namespace UnitTestProject3
             PageFactory.InitElements(browser, this);
         }
 
+        [FindsBy(How = How.ClassName, Using = "summary_subtotal_label")]
+        public IWebElement totalPrice { get; set; }
+
+        [FindsBy(How = How.ClassName, Using = "cart_checkout_link")]
+        public IWebElement finishButton { get; set; }
 
         public IList<IWebElement> OverviewProducts()
         {
             IList<IWebElement> test = driver.FindElement(By.ClassName("cart_list")).FindElements(By.ClassName("cart_item"));
             return test;
         }
-
-        [FindsBy(How = How.ClassName, Using = "summary_subtotal_label")]
-        public IWebElement totalPrice { get; set; }
-
-        [FindsBy(How = How.ClassName, Using = "cart_checkout_link")]
-        public IWebElement finishButton { get; set; }
     }
 }
