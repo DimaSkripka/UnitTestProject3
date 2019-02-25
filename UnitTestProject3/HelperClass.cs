@@ -72,7 +72,7 @@ namespace UnitTestProject3
             {
                 Product product = new Product();
                 product.name = test[i].FindElement(By.ClassName(nameLocator)).Text;
-                product.price = test[i].FindElement(By.ClassName(priceLocator)).Text;
+                product.price = test[i].FindElement(By.ClassName(priceLocator)).Text.Replace("$",string.Empty).Trim();
                 product.description = test[i].FindElement(By.ClassName(descriptionLocator)).Text;
                 productsWithAttributes.Add(product);
                 
