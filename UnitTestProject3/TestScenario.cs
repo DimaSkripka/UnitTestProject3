@@ -51,7 +51,7 @@ namespace UnitTestProject3
             }
             catch (Exception)
             {
-                var writer = new StreamWriter(@"C:/TestData/TestDescription2.txt");
+                var writer = new StreamWriter(@"txt path");
                 writer.WriteLine("Cart Product Counter is not working correctly");
                 writer.Flush();
                 writer.Dispose();
@@ -73,7 +73,7 @@ namespace UnitTestProject3
             }
             catch (Exception ex)
             {
-                var writer = new StreamWriter(@"your txt path");
+                var writer = new StreamWriter(@"txt path");
                 writer.WriteLine("selected products not match to products in cart");
                 writer.Flush();
                 writer.Dispose();
@@ -101,14 +101,14 @@ namespace UnitTestProject3
                 }
                 catch (Exception ex)
                 {
-                    var writer = new StreamWriter(@"C:/TestData/TestDescription4.txt");
+                    var writer = new StreamWriter(@"txt path");
                     writer.WriteLine("not match");
                     writer.Flush();
                     writer.Dispose();
                     new CheckoutOverview(this.driver).finishButton.Click();
                 }
             }
-            new Exceptions(this.driver).CheckIsElementPresented("complete-header", "checkout failed", "yourtxtpath");
+            new Exceptions(this.driver).CheckIsElementPresented("complete-header", "checkout failed", "txt path");
         }
     }
 }
