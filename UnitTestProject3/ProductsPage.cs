@@ -25,6 +25,7 @@ namespace UnitTestProject3
             PageFactory.InitElements(browser, this);
         }
 
+        [FindsBy(How = How.ClassName, Using = "inventory_container")]
         [FindsBy(How = How.ClassName, Using = "inventory_list")]
         [FindsBy(How = How.ClassName, Using = "inventory_item")]
         public IList<IWebElement> ProductList { get; set; }

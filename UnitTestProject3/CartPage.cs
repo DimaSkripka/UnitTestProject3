@@ -25,7 +25,7 @@ namespace UnitTestProject3
             PageFactory.InitElements(browser, this);
         }
 
-        [FindsBy(How = How.ClassName, Using = "cart_checkout_link")]
+        [FindsBy(How = How.ClassName, Using = "btn_action")]
         public IWebElement checkOutButton { get; set; }
 
         public IList<IWebElement> CartProducts()

@@ -31,7 +31,7 @@ namespace UnitTestProject3
         [FindsBy(How = How.Id, Using = "password")]
         public IWebElement UserPasswordField { get; set; }
 
-        [FindsBy(How = How.ClassName, Using = "login-button")]
+        [FindsBy(How = How.ClassName, Using = "btn_action")]
         public IWebElement LoginButton { get; set; }
 
 

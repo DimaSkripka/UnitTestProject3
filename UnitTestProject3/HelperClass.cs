@@ -42,7 +42,7 @@ namespace UnitTestProject3
                 if (!selectedProducts.Contains(itemList[rndValue]))
                 {
                     selectedProducts.Add(itemList[rndValue]);
-                    x.FindElement(By.ClassName("add-to-cart-button")).Click();
+                    x.FindElement(By.ClassName("btn_primary")).Click();
                 }
             }
             return selectedProducts;
